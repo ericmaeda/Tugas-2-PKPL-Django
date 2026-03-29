@@ -2,10 +2,95 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            poppins: ['Poppins', 'sans-serif'],
+                        }
+                    }
+                }
+            }
+        </script>
         <title>Kuda Poni Ngawi</title>
     </head>
 
-    <body>
-        <p1> {{ tes }} </p1>
+    <body class="bg-black font-poppins min-h-screen">
+        <navbar class="flex justify-between px-[80px] py-[32px] bg-[#0C0C0C]"> 
+            <text class="font-bold italic text-left text-white text-[32px]"> KPN. </text>
+
+            <button class="bg-[#A5CDFE] justify-center px-[48px] py-[12px] rounded-[12px]">
+                <text class="text-black text-[16px] font-medium">Login</text>
+            </button>
+        </navbar>
+
+        <div class="flex justify-center">
+            <text class="text-white font-semibold text-[48px] mt-[68px] text-center">
+                Meet Our
+                <span class="text-[#A5CDFE]">Team.</span>.
+            </text>
+        </div>
+
+        <div class="flex justify-center">
+            <text class="text-white text-[24px] mt-[8px] text-center">Yuk kenalan dengan anggota kelompok Kuda Poni Ngawi</text>
+        </div>
+
+        <div class="flex justify-between px-[288px]">
+            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
+                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
+        
+                <div class="mt-[24px] px-2 pb-2">
+                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    
+                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                </div>
+            </card>
+
+            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
+                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
+        
+                <div class="mt-[24px] px-2 pb-2">
+                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    
+                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                </div>
+        </div>
+
+        <div class="flex justify-between px-[288px] mt-[28px]">
+            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
+                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
+        
+                <div class="mt-[24px] px-2 pb-2">
+                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    
+                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                </div>
+            </card>
+
+            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
+                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
+        
+                <div class="mt-[24px] px-2 pb-2">
+                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    
+                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                </div>
+        </div>
+        
+        <navbar class="flex justify-between px-[80px] py-[32px] bg-[#0C0C0C] mt-[88px]"> 
+            <text class="font-bold italic text-left text-white text-[32px]"> KPN. </text>
+
+            <text class="text-[#606060] text-[16px]">Tugas 2 PKPL</text>
+        </navbar>
     </body>
 </html>
