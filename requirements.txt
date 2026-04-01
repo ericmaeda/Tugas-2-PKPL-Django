@@ -4,9 +4,3 @@ whitenoise
 psycopg2-binary
 requests
 urllib3
-django-allauth>=0.62.0
-PyJWT>=2.8.0
-openid-connect
-python3-openid
-requests-oauthlib
-cryptography
