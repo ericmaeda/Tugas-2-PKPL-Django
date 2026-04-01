@@ -11,7 +11,8 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
-
+import os
+from dotenv import load_dotenv
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -117,8 +118,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # OAuth Config
-GOOGLE_CLIENT_ID = ''
-GOOGLE_CLIENT_SECRET = ''
+load_dotenv()
+GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
+GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 GOOGLE_REDIRECT_URI = 'http://localhost:8000/auth/callback'
 
 ALLOWED_MEMBER_EMAILS = [
