@@ -15,17 +15,93 @@
             }
         </script>
         <title>Kuda Poni Ngawi</title>
+
+        <!-- ① CSS variables untuk tema dinamis (default = warna asli) -->
+        <style>
+            :root {
+                --bg:     {{ theme.bg_color }};
+                --card:   {{ theme.card_color }};
+                --text:   {{ theme.text_color }};
+                --accent: {{ theme.accent }};
+            }
+            body  { background-color: var(--bg) !important; }
+            .dyn-card   { background-color: var(--card) !important; }
+            .dyn-text   { color: var(--text) !important; }
+            .dyn-accent { color: var(--accent) !important; }
+            .dyn-accent-bg { background-color: var(--accent) !important; }
+        </style>
     </head>
 
     <body class="bg-black font-poppins min-h-screen">
+        {% csrf_token %}
+
+        <!-- NAVBAR — hanya bagian tombol Login yang diubah -->
         <navbar class="flex justify-between px-[80px] py-[24px] bg-[#0C0C0C]"> 
             <text class="font-bold italic text-left text-white text-[32px]"> KPN. </text>
 
-            <button class="bg-[#A5CDFE] justify-center px-[48px] py-[12px] rounded-[12px]">
-                <text class="text-black text-[16px] font-medium">Login</text>
-            </button>
+            {% if user %}
+                <!-- Sudah login: tampilkan avatar, nama, dan tombol Logout -->
+                <div class="flex items-center gap-3">
+                    <img src="{{ user.picture }}" alt="avatar"
+                         class="w-9 h-9 rounded-full border-2 border-[#A5CDFE]">
+                    <text class="text-white text-[16px]">{{ user.name }}</text>
+                    <a href="/auth/logout"
+                       class="bg-[#A5CDFE] justify-center px-[24px] py-[12px] rounded-[12px]">
+                        <text class="text-black text-[16px] font-medium">Logout</text>
+                    </a>
+                </div>
+            {% else %}
+                <!-- Belum login: tombol Login with Google -->
+                <a href="/auth/login">
+                    <button class="bg-[#A5CDFE] justify-center px-[48px] py-[12px] rounded-[12px]">
+                        <text class="text-black text-[16px] font-medium">Login with Google</text>
+                    </button>
+                </a>
+            {% endif %}
         </navbar>
 
+        <!-- ② THEME PANEL — hanya muncul untuk anggota kelompok -->
+        {% if is_member %}
+        <div class="flex justify-center mt-4">
+            <div class="bg-[#171717] rounded-[16px] px-[24px] py-[16px] w-fit">
+                <p class="text-[#A5CDFE] font-semibold mb-3">🎨 Ubah Tampilan (Member Only)</p>
+                <div class="flex gap-6 flex-wrap text-white text-[14px]">
+                    <label>Background
+                        <input type="color" id="bg_color" value="{{ theme.bg_color }}"
+                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
+                    </label>
+                    <label>Card
+                        <input type="color" id="card_color" value="{{ theme.card_color }}"
+                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
+                    </label>
+                    <label>Text
+                        <input type="color" id="text_color" value="{{ theme.text_color }}"
+                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
+                    </label>
+                    <label>Accent
+                        <input type="color" id="accent" value="{{ theme.accent }}"
+                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
+                    </label>
+                    <label>Font
+                        <select id="font" class="block mt-1 p-1 rounded bg-black text-white">
+                            <option value="Poppins"    {% if theme.font == "Poppins" %}selected{% endif %}>Poppins</option>
+                            <option value="Roboto"     {% if theme.font == "Roboto" %}selected{% endif %}>Roboto</option>
+                            <option value="Inter"      {% if theme.font == "Inter" %}selected{% endif %}>Inter</option>
+                            <option value="Montserrat" {% if theme.font == "Montserrat" %}selected{% endif %}>Montserrat</option>
+                            <option value="Georgia"    {% if theme.font == "Georgia" %}selected{% endif %}>Georgia</option>
+                        </select>
+                    </label>
+                </div>
+                <button onclick="saveTheme()"
+                        class="bg-[#A5CDFE] mt-4 px-6 py-2 rounded-[12px] text-black font-semibold">
+                    Simpan
+                </button>
+                <span id="theme-msg" class="text-green-400 text-xs ml-3 opacity-0">✅ Tersimpan!</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- KONTEN ASLI — tidak diubah sama sekali -->
         <div class="flex justify-center">
             <text class="text-white font-semibold text-[48px] mt-[68px] text-center">
                 Meet Our <span class="text-[#A5CDFE]">Team.</span>
@@ -90,6 +166,46 @@
             <text class="font-bold italic text-left text-white text-[32px]"> KPN. </text>
 
             <text class="text-[#606060] text-[16px]">Tugas 2 PKPL</text>
-        </navbar>
+        </footer>
+
+        {% if is_member %}
+        <script>
+            function getCookie(name) {
+                let v = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+                return v ? v[2] : null;
+            }
+
+            async function saveTheme() {
+                const payload = {
+                    bg_color:   document.getElementById('bg_color').value,
+                    card_color: document.getElementById('card_color').value,
+                    text_color: document.getElementById('text_color').value,
+                    accent:     document.getElementById('accent').value,
+                    font:       document.getElementById('font').value,
+                };
+
+                const res = await fetch('/api/save-theme', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify(payload),
+                });
+
+                if (res.ok) {
+                    document.documentElement.style.setProperty('--bg',   payload.bg_color);
+                    document.documentElement.style.setProperty('--card', payload.card_color);
+                    document.documentElement.style.setProperty('--text', payload.text_color);
+                    document.documentElement.style.setProperty('--accent', payload.accent);
+
+                    const msg = document.getElementById('theme-msg');
+                    msg.style.opacity = '1';
+                    setTimeout(() => msg.style.opacity = '0', 2000);
+                }
+            }
+        </script>
+        {% endif %}
+
     </body>
 </html>
