@@ -55,7 +55,7 @@
         // Cek query param
         const params = new URLSearchParams(window.location.search);
         const toast = params.get('toast');
-        if (toast === 'login_berhasil')  showToast('Login berhasil!');
+        if (toast === 'login_berhasil') showToast('Login berhasil!');
         if (toast === 'logout_berhasil') showToast('Logout berhasil!');
 
         // Bersihkan query param dari URL tanpa reload
@@ -208,9 +208,7 @@
                     document.documentElement.style.setProperty('--accent', payload.accent);
                     document.body.style.fontFamily = payload.font + ', sans-serif';
 
-                    const msg = document.getElementById('theme-msg');
-                    msg.style.opacity = '1';
-                    setTimeout(() => msg.style.opacity = '0', 2000);
+                    showToast('Tampilan berhasil disimpan!');
                 }
             }
         </script>
