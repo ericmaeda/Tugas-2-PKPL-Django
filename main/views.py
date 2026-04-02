@@ -7,17 +7,23 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.http import require_POST
+from .models import Theme
 
 def show_biodata(request):
     user_info = request.session.get('user')
     is_member = _is_member(user_info['email']) if user_info else False
 
-    theme = request.session.get('theme', {
-        'bg_color':   '#000000',
-        'card_color': '#171717',
-        'text_color': '#FFFFFF',
-        'font':       'Poppins',
-    })
+    theme_obj = Theme.objects.first()
+    if not theme_obj:
+        theme_obj = Theme.objects.create()
+
+    theme = {
+        'bg_color':   theme_obj.bg_color,
+        'card_color': theme_obj.card_color,
+        'text_color': theme_obj.text_color,
+        'accent':     theme_obj.accent,
+        'font':       theme_obj.font,
+    }
 
     context = {
         'user':      user_info,
@@ -119,26 +125,26 @@ def oauth_logout(request):
 @require_POST
 def save_theme(request):
     user_info = request.session.get('user')
-
-    # Authorization check
     if not user_info or not _is_member(user_info['email']):
-        return JsonResponse({'error': 'Error: Anda bukan anggota kelompok.'}, status=403)
+        return JsonResponse({'error': 'Forbidden'}, status=403)
 
-    try:
-        body = json.loads(request.body)
-    except json.JSONDecodeError:
-        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    import json
+    body = json.loads(request.body)
 
-    allowed_fonts = ['Poppins', 'Inter', 'Montserrat']
+    allowed_fonts = ['Poppins', 'Roboto', 'Inter', 'Montserrat', 'Georgia']
     font = body.get('font', 'Poppins')
     if font not in allowed_fonts:
         font = 'Poppins'
 
-    request.session['theme'] = {
-        'bg_color':   body.get('bg_color',   '#000000'),
-        'card_color': body.get('card_color', '#171717'),
-        'text_color': body.get('text_color', '#FFFFFF'),
-        'font':       font,
-    }
+    theme_obj = Theme.objects.first()
+    if not theme_obj:
+        theme_obj = Theme()
+
+    theme_obj.bg_color   = body.get('bg_color',   '#000000')
+    theme_obj.card_color = body.get('card_color', '#171717')
+    theme_obj.text_color = body.get('text_color', '#FFFFFF')
+    theme_obj.accent     = body.get('accent',     '#A5CDFE')
+    theme_obj.font       = font
+    theme_obj.save()
 
     return JsonResponse({'status': 'ok'})
