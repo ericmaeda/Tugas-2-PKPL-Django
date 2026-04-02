@@ -113,8 +113,8 @@
                     </label>
                     <label>Font
                         <select id="font" class="block mt-1 p-1 rounded bg-black text-white">
-                            <option value="Poppins"    {% if theme.font == "Poppins" %}selected{% endif %}>Poppins</option>
-                            <option value="Inter"      {% if theme.font == "Inter" %}selected{% endif %}>Inter</option>
+                            <option value="Poppins" {% if theme.font == "Poppins" %}selected{% endif %}>Poppins</option>
+                            <option value="Inter" {% if theme.font == "Inter" %}selected{% endif %}>Inter</option>
                             <option value="Montserrat" {% if theme.font == "Montserrat" %}selected{% endif %}>Montserrat</option>
                         </select>
                     </label>
@@ -128,50 +128,37 @@
 
         </div>
 
-        <div class="flex gap-[28px] overflow-x-auto scrollbar-hide pl-[68px] pr-[68px] mt-[48px] pb-[16px]">
-            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
-                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Erico Putra Bani Mahendra" class="rounded-[12px] object-cover w-[340px] h-[300px]">
-                <div class="mt-[24px] px-2 pb-2">
-                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="dyn-text font-semibold text-[20px] mb-3">Erico Putra Bani Mahendra</p>
-                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="dyn-text font-semibold text-[20px]">2406423181</p>
-                </div>
+        <div class="flex gap-[28px] overflow-x-auto scrollbar-hide pl-[68px] pr-[68px] mt-[60px] pb-[16px]">
+            <card class="dyn-card px-[40px] py-[16px] flex-shrink-0 rounded-[12px]">
+                <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                <p class="dyn-text font-semibold text-[20px] mb-3">Erico Putra Bani Mahendra</p>
+                <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                <p class="dyn-text font-semibold text-[20px]">2406423181</p>
             </card>
 
-            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
-                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Angga Ziaurrohchman" class="rounded-[12px] object-cover w-[340px] h-[300px]">
-                <div class="mt-[24px] px-2 pb-2">
-                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="dyn-text font-semibold text-[20px] mb-3">Angga Ziaurrohchman</p>
-                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="dyn-text font-semibold text-[20px]">2406495943</p>
-                </div>
+            <card class="dyn-card px-[40px] py-[16px] flex-shrink-0 rounded-[12px]">
+                <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                <p class="dyn-text font-semibold text-[20px] mb-3">Angga Ziaurrohchman</p>
+                <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                <p class="dyn-text font-semibold text-[20px]">2406495943</p>
             </card>
 
-            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
-                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Oscar Glad Winfi S." class="rounded-[12px] object-cover w-[340px] h-[300px]">
-                <div class="mt-[24px] px-2 pb-2">
-                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="dyn-text font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
-                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="dyn-text font-semibold text-[20px]">2406411906</p>
-                </div>
+            <card class="dyn-card px-[40px] py-[16px] flex-shrink-0 rounded-[12px]">
+                <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                <p class="dyn-text font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                <p class="dyn-text font-semibold text-[20px]">2406411906</p>
             </card>
 
-            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
-                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Tangguh Ambha Wahyuga" class="rounded-[12px] object-cover w-[340px] h-[300px]">
-                <div class="mt-[24px] px-2 pb-2">
-                    <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="dyn-text font-semibold text-[20px] mb-3">Tangguh Ambha Wahyuga</p>
-                    <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="dyn-text font-semibold text-[20px]">2406361536</p>
-                </div>
+            <card class="dyn-card px-[40px] py-[16px] flex-shrink-0 rounded-[12px]">
+                <p class="text-gray-400 font-medium text-[16px]">Name:</p>
+                <p class="dyn-text font-semibold text-[20px] mb-3">Tangguh Ambha Wahyuga</p>
+                <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
+                <p class="dyn-text font-semibold text-[20px]">2406361536</p>
             </card>
         </div>
 
-        
-        <footer class="flex justify-between px-[80px] py-[32px] bg-[#0C0C0C] mt-[88px]"> 
+        <footer class="flex justify-between px-[80px] py-[32px] bg-[#0C0C0C] mt-[120px]"> 
             <text class="font-bold italic text-left text-white text-[32px]"> KPN. </text>
 
             <text class="text-[#606060] text-[16px]">Tugas 2 PKPL</text>
