@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g=g5b!7993ye7v-twbm=i)=ie-4m3r!iznwr7e@_ul+nd(8xx3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['tugas-2-pkpl-django-rupb.vercel.app']
 
 
 # Application definition
