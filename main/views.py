@@ -100,6 +100,14 @@ def oauth_callback(request):
         'name':    user_info.get('name'),
         'picture': user_info.get('picture'),
     }
+    
+    if 'theme' not in request.session:
+        request.session['theme'] = {
+            'bg_color': '#000000',
+            'card_color': '#171717',
+            'text_color': '#FFFFFF',
+            'font': 'Poppins',
+        }
 
     return redirect('/?toast=login_berhasil')
 
