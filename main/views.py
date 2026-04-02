@@ -2,7 +2,7 @@ from django.shortcuts import render
 import urllib.parse
 import secrets
 import requests
-
+import json
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
@@ -16,23 +16,13 @@ def show_biodata(request):
         'bg_color':   '#000000',
         'card_color': '#171717',
         'text_color': '#FFFFFF',
-        'accent':     '#A5CDFE',
         'font':       'Poppins',
     })
-
-    # Isi dengan data anggota kelompok Anda
-    members = [
-        {'name': 'Oscar Glad Winfi S.', 'npm': '2406411906', 'photo': ''},
-        {'name': 'Tangguh Ambha Wahyuga',       'npm': '2406361536', 'photo': ''},
-        {'name': 'Nama Anggota 3',       'npm': '240XXXXXXX', 'photo': ''},
-        {'name': 'Nama Anggota 4',       'npm': '240XXXXXXX', 'photo': ''},
-    ]
 
     context = {
         'user':      user_info,
         'is_member': is_member,
         'theme':     theme,
-        'members':   members,
     }
     return render(request, 'show_biodata.html', context)
 
@@ -111,33 +101,27 @@ def oauth_callback(request):
         'picture': user_info.get('picture'),
     }
 
-    return redirect('show_biodata')
-
+    return redirect('/?toast=login_berhasil')
 
 def oauth_logout(request):
     """Hapus session user."""
     request.session.flush()
-    return redirect('show_biodata')
-
+    return redirect('/?toast=logout_berhasil')
 
 @require_POST
 def save_theme(request):
-    """
-    Simpan preferensi tema — hanya untuk anggota kelompok (authorization).
-    """
     user_info = request.session.get('user')
 
     # Authorization check
     if not user_info or not _is_member(user_info['email']):
-        return JsonResponse({'error': 'Forbidden: bukan anggota kelompok.'}, status=403)
+        return JsonResponse({'error': 'Error: Anda bukan anggota kelompok.'}, status=403)
 
-    import json
     try:
         body = json.loads(request.body)
     except json.JSONDecodeError:
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
 
-    allowed_fonts = ['Poppins', 'Roboto', 'Inter', 'Montserrat', 'Georgia']
+    allowed_fonts = ['Poppins', 'Inter', 'Montserrat']
     font = body.get('font', 'Poppins')
     if font not in allowed_fonts:
         font = 'Poppins'
@@ -146,7 +130,6 @@ def save_theme(request):
         'bg_color':   body.get('bg_color',   '#000000'),
         'card_color': body.get('card_color', '#171717'),
         'text_color': body.get('text_color', '#FFFFFF'),
-        'accent':     body.get('accent',     '#A5CDFE'),
         'font':       font,
     }
 

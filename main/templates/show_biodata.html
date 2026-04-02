@@ -15,10 +15,10 @@
                     }
                 }
             }
+
         </script>
         <title>Kuda Poni Ngawi</title>
 
-        <!-- ① CSS variables untuk tema dinamis (default = warna asli) -->
         <style>
             :root {
                 --bg:     {{ theme.bg_color }};
@@ -31,135 +31,145 @@
             .dyn-text   { color: var(--text) !important; }
             .dyn-accent { color: var(--accent) !important; }
             .dyn-accent-bg { background-color: var(--accent) !important; }
+
+            .scrollbar-hide::-webkit-scrollbar { display: none; }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
         </style>
     </head>
+
+    <div id="toast" class="fixed top-[32px] left-1/2 -translate-x-1/2 bg-green-500 text-white px-[28px] py-[12px] rounded-[12px] shadow-lg opacity-0 transition-opacity duration-300 text-[14px] pointer-events-none">
+        <span id="toast-msg"></span>
+    </div>
+
+    <script>
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
+            toast.style.opacity = '1';
+            setTimeout(() => toast.style.opacity = '0', 3000);
+        }
+
+        // Cek query param
+        const params = new URLSearchParams(window.location.search);
+        const toast = params.get('toast');
+        if (toast === 'login_berhasil')  showToast('Login berhasil!');
+        if (toast === 'logout_berhasil') showToast('Logout berhasil!');
+
+        // Bersihkan query param dari URL tanpa reload
+        if (toast) {
+            window.history.replaceState({}, '', window.location.pathname);
+        }
+    </script>
 
     <body class="font-poppins min-h-screen">
         {% csrf_token %}
 
-        <!-- NAVBAR — hanya bagian tombol Login yang diubah -->
         <navbar class="flex justify-between px-[80px] py-[24px] bg-[#0C0C0C]"> 
             <text class="font-bold italic text-left text-white text-[32px]"> KPN. </text>
 
             {% if user %}
-                <!-- Sudah login: tampilkan avatar, nama, dan tombol Logout -->
                 <div class="flex items-center gap-3">
                     <text class="text-white text-[16px]">{{ user.name }}</text>
                     <a href="/auth/logout"
-                       class="bg-[#A5CDFE] justify-center px-[24px] py-[12px] rounded-[12px]">
+                       class="bg-[#A5CDFE] justify-center px-[24px] py-[8px] rounded-[12px]">
                         <text class="text-black text-[16px] font-medium">Logout</text>
                     </a>
                 </div>
             {% else %}
-                <!-- Belum login: tombol Login with Google -->
                 <a href="/auth/login">
-                    <button class="bg-[#A5CDFE] justify-center px-[48px] py-[12px] rounded-[12px]">
+                    <button class="bg-[#A5CDFE] justify-center px-[48px] py-[8px] rounded-[12px]">
                         <text class="text-black text-[16px] font-medium">Login with Google</text>
                     </button>
                 </a>
             {% endif %}
         </navbar>
 
-        <!-- ② THEME PANEL — hanya muncul untuk anggota kelompok -->
-        {% if is_member %}
-        <div class="flex justify-center mt-4">
-            <div class="bg-[#171717] rounded-[16px] px-[24px] py-[16px] w-fit">
-                <p class="text-[#A5CDFE] font-semibold mb-3">🎨 Ubah Tampilan (Member Only)</p>
+        <div class="flex justify-between items-start px-[68px] mt-[68px]">
+            <div>
+                <text class="text-white font-semibold text-[48px]">
+                    Meet Our <span class="text-[#A5CDFE]">Team.</span>
+                </text>
+                <div class="text-white text-[24px] mt-[8px]">Yuk kenalan dengan anggota kelompok Kuda Poni Ngawi</div>
+            </div>
+            
+            {% if is_member %}
+            <div class="bg-[#171717] rounded-[16px] px-[24px] py-[20px] w-fit">
+                <p class="text-[#A5CDFE] font-semibold mb-3">Ubah Tampilan dan Card Nama</p>
                 <div class="flex gap-6 flex-wrap text-white text-[14px]">
                     <label>Background
                         <input type="color" id="bg_color" value="{{ theme.bg_color }}"
-                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
+                            class="block w-20 h-8 mt-1 rounded cursor-pointer">
                     </label>
                     <label>Card
                         <input type="color" id="card_color" value="{{ theme.card_color }}"
-                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
+                            class="block w-20 h-8 mt-1 rounded cursor-pointer">
                     </label>
-                    <label>Text
+                    <label>Nama Anggota
                         <input type="color" id="text_color" value="{{ theme.text_color }}"
-                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
-                    </label>
-                    <label>Accent
-                        <input type="color" id="accent" value="{{ theme.accent }}"
-                               class="block w-20 h-8 mt-1 rounded cursor-pointer">
+                            class="block w-20 h-8 mt-1 rounded cursor-pointer">
                     </label>
                     <label>Font
                         <select id="font" class="block mt-1 p-1 rounded bg-black text-white">
                             <option value="Poppins"    {% if theme.font == "Poppins" %}selected{% endif %}>Poppins</option>
-                            <option value="Roboto"     {% if theme.font == "Roboto" %}selected{% endif %}>Roboto</option>
                             <option value="Inter"      {% if theme.font == "Inter" %}selected{% endif %}>Inter</option>
                             <option value="Montserrat" {% if theme.font == "Montserrat" %}selected{% endif %}>Montserrat</option>
-                            <option value="Georgia"    {% if theme.font == "Georgia" %}selected{% endif %}>Georgia</option>
                         </select>
                     </label>
                 </div>
                 <button onclick="saveTheme()"
-                        class="bg-[#A5CDFE] mt-4 px-6 py-2 rounded-[12px] text-black font-semibold">
+                        class="bg-[#A5CDFE] mt-[16px] px-6 py-2 rounded-[12px] text-black w-full">
                     Simpan
                 </button>
-                <span id="theme-msg" class="text-green-400 text-xs ml-3 opacity-0">✅ Tersimpan!</span>
             </div>
-        </div>
-        {% endif %}
+            {% endif %}
 
-        <!-- KONTEN ASLI — tidak diubah sama sekali -->
-        <div class="flex justify-center">
-            <text class="text-white font-semibold text-[48px] mt-[68px] text-center">
-                Meet Our <span class="text-[#A5CDFE]">Team.</span>
-            </text>
         </div>
 
-        <div class="flex justify-center">
-            <text class="text-white text-[24px] mt-[8px] text-center">Yuk kenalan dengan anggota kelompok Kuda Poni Ngawi</text>
-        </div>
-
-        <div class="flex justify-between px-[288px]">
-            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+        <div class="flex gap-[28px] overflow-x-auto scrollbar-hide pl-[68px] pr-[68px] mt-[48px] pb-[16px]">
+            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
                 <img src="{% static 'main/alamak.jpg' %}" alt="Foto Erico Putra Bani Mahendra" class="rounded-[12px] object-cover w-[340px] h-[300px]">
-        
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
                     <p class="dyn-text font-semibold text-[20px] mb-3">Erico Putra Bani Mahendra</p>
-                    
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
                     <p class="dyn-text font-semibold text-[20px]">2406423181</p>
                 </div>
             </card>
 
-            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
                 <img src="{% static 'main/alamak.jpg' %}" alt="Foto Angga Ziaurrohchman" class="rounded-[12px] object-cover w-[340px] h-[300px]">
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
                     <p class="dyn-text font-semibold text-[20px] mb-3">Angga Ziaurrohchman</p>
-                    
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
                     <p class="dyn-text font-semibold text-[20px]">2406495943</p>
                 </div>
-        </div>
+            </card>
 
-        <div class="flex justify-between px-[288px] mt-[28px]">
-            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
                 <img src="{% static 'main/alamak.jpg' %}" alt="Foto Oscar Glad Winfi S." class="rounded-[12px] object-cover w-[340px] h-[300px]">
-        
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
                     <p class="dyn-text font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
-                    
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
                     <p class="dyn-text font-semibold text-[20px]">2406411906</p>
                 </div>
             </card>
 
-            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+            <card class="dyn-card px-[24px] py-[20px] flex-shrink-0 rounded-[12px]">
                 <img src="{% static 'main/alamak.jpg' %}" alt="Foto Tangguh Ambha Wahyuga" class="rounded-[12px] object-cover w-[340px] h-[300px]">
-        
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
                     <p class="dyn-text font-semibold text-[20px] mb-3">Tangguh Ambha Wahyuga</p>
-                    
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
                     <p class="dyn-text font-semibold text-[20px]">2406361536</p>
                 </div>
+            </card>
         </div>
+
         
         <footer class="flex justify-between px-[80px] py-[32px] bg-[#0C0C0C] mt-[88px]"> 
             <text class="font-bold italic text-left text-white text-[32px]"> KPN. </text>
@@ -179,7 +189,6 @@
                     bg_color:   document.getElementById('bg_color').value,
                     card_color: document.getElementById('card_color').value,
                     text_color: document.getElementById('text_color').value,
-                    accent:     document.getElementById('accent').value,
                     font:       document.getElementById('font').value,
                 };
 
@@ -197,7 +206,7 @@
                     document.documentElement.style.setProperty('--card', payload.card_color);
                     document.documentElement.style.setProperty('--text', payload.text_color);
                     document.documentElement.style.setProperty('--accent', payload.accent);
-                    document.body.style.fontFamily = payload.font + ', sans-serif'; // tambah ini
+                    document.body.style.fontFamily = payload.font + ', sans-serif';
 
                     const msg = document.getElementById('theme-msg');
                     msg.style.opacity = '1';
