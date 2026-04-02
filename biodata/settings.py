@@ -127,7 +127,7 @@ STATIC_URL = 'static/'
 load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
-GOOGLE_REDIRECT_URI = 'http://localhost:8000/auth/callback'
+GOOGLE_REDIRECT_URI = 'https://tugas-2-pkpl-django-epqq.vercel.app/auth/callback'
 
 SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
