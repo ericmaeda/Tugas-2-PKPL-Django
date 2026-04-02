@@ -7,18 +7,13 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.conf import settings
 from django.views.decorators.http import require_POST
+import os
 
 def show_biodata(request):
     user_info = request.session.get('user')
     is_member = _is_member(user_info['email']) if user_info else False
 
-    theme = request.session.get('theme', {
-        'bg_color':   '#000000',
-        'card_color': '#171717',
-        'text_color': '#FFFFFF',
-        'font':       'Poppins',
-    })
-
+    theme = read_theme()
     context = {
         'user':      user_info,
         'is_member': is_member,
@@ -116,6 +111,26 @@ def oauth_logout(request):
     request.session.flush()
     return redirect('/?toast=logout_berhasil')
 
+THEME_FILE = os.path.join(os.path.dirname(__file__), 'theme.json')
+
+DEFAULT_THEME = {
+    'bg_color':   '#000000',
+    'card_color': '#171717',
+    'text_color': '#FFFFFF',
+    'font':       'Poppins',
+}
+
+def read_theme():
+    try:
+        with open(THEME_FILE, 'r') as file:
+            return json.load(file)
+    except:
+        return DEFAULT_THEME.copy()
+
+def write_theme(theme):
+    with open(THEME_FILE, 'w') as file:
+        json.dump(theme, file)
+
 @require_POST
 def save_theme(request):
     user_info = request.session.get('user')
@@ -134,11 +149,14 @@ def save_theme(request):
     if font not in allowed_fonts:
         font = 'Poppins'
 
-    request.session['theme'] = {
+    theme = {
         'bg_color':   body.get('bg_color',   '#000000'),
         'card_color': body.get('card_color', '#171717'),
         'text_color': body.get('text_color', '#FFFFFF'),
+        'accent':     body.get('accent',     '#A5CDFE'),
         'font':       font,
     }
+    
+    write_theme(theme)
 
     return JsonResponse({'status': 'ok'})
