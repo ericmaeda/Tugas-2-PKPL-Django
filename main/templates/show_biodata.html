@@ -1,7 +1,9 @@
+{% load static %}
 <html> 
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Roboto:wght@400;600;700&family=Inter:wght@400;600;700&family=Montserrat:wght@400;600;700&family=Georgia&display=swap" rel="stylesheet">
         <script src="https://cdn.tailwindcss.com"></script>
         <script>
             tailwind.config = {
@@ -32,7 +34,7 @@
         </style>
     </head>
 
-    <body class="bg-black font-poppins min-h-screen">
+    <body class="font-poppins min-h-screen">
         {% csrf_token %}
 
         <!-- NAVBAR — hanya bagian tombol Login yang diubah -->
@@ -42,8 +44,6 @@
             {% if user %}
                 <!-- Sudah login: tampilkan avatar, nama, dan tombol Logout -->
                 <div class="flex items-center gap-3">
-                    <img src="{{ user.picture }}" alt="avatar"
-                         class="w-9 h-9 rounded-full border-2 border-[#A5CDFE]">
                     <text class="text-white text-[16px]">{{ user.name }}</text>
                     <a href="/auth/logout"
                        class="bg-[#A5CDFE] justify-center px-[24px] py-[12px] rounded-[12px]">
@@ -113,52 +113,51 @@
         </div>
 
         <div class="flex justify-between px-[288px]">
-            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
-                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
+            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Erico Putra Bani Mahendra" class="rounded-[12px] object-cover w-[340px] h-[300px]">
         
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    <p class="dyn-text font-semibold text-[20px] mb-3">Erico Putra Bani Mahendra</p>
                     
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                    <p class="dyn-text font-semibold text-[20px]">2406423181</p>
                 </div>
             </card>
 
-            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
-                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
-        
+            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Angga Ziaurrohchman" class="rounded-[12px] object-cover w-[340px] h-[300px]">
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    <p class="dyn-text font-semibold text-[20px] mb-3">Angga Ziaurrohchman</p>
                     
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                    <p class="dyn-text font-semibold text-[20px]">2406495943</p>
                 </div>
         </div>
 
         <div class="flex justify-between px-[288px] mt-[28px]">
-            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
-                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
+            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Oscar Glad Winfi S." class="rounded-[12px] object-cover w-[340px] h-[300px]">
         
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    <p class="dyn-text font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
                     
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                    <p class="dyn-text font-semibold text-[20px]">2406411906</p>
                 </div>
             </card>
 
-            <card class="bg-[#1C1C1E] rounded-[16px] bg-[#171717] mt-[80px] px-[24px] py-[20px]">
-                <img src="" alt="Foto" class="rounded-[12px] object-cover w-[340px] h-[300px]">
+            <card class="dyn-card rounded-[16px] mt-[80px] px-[24px] py-[20px]">
+                <img src="{% static 'main/alamak.jpg' %}" alt="Foto Tangguh Ambha Wahyuga" class="rounded-[12px] object-cover w-[340px] h-[300px]">
         
                 <div class="mt-[24px] px-2 pb-2">
                     <p class="text-gray-400 font-medium text-[16px]">Name:</p>
-                    <p class="text-white font-semibold text-[20px] mb-3">Oscar Glad Winfi S.</p>
+                    <p class="dyn-text font-semibold text-[20px] mb-3">Tangguh Ambha Wahyuga</p>
                     
                     <p class="text-gray-400 font-medium text-[16px]">NPM:</p>
-                    <p class="text-white font-semibold text-[20px]">2406411906</p>
+                    <p class="dyn-text font-semibold text-[20px]">2406361536</p>
                 </div>
         </div>
         
@@ -198,6 +197,7 @@
                     document.documentElement.style.setProperty('--card', payload.card_color);
                     document.documentElement.style.setProperty('--text', payload.text_color);
                     document.documentElement.style.setProperty('--accent', payload.accent);
+                    document.body.style.fontFamily = payload.font + ', sans-serif'; // tambah ini
 
                     const msg = document.getElementById('theme-msg');
                     msg.style.opacity = '1';
