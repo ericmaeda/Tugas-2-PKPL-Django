@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-g=g5b!7993ye7v-twbm=i)=ie-4m3r!iznwr7e@_ul+nd(8xx3
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -100,6 +100,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
 
@@ -122,6 +123,8 @@ load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
 GOOGLE_CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
 GOOGLE_REDIRECT_URI = 'http://localhost:8000/auth/callback'
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
 ALLOWED_MEMBER_EMAILS = [
     'tawahyuga17@gmail.com',

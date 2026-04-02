@@ -128,8 +128,11 @@ def read_theme():
         return DEFAULT_THEME.copy()
 
 def write_theme(theme):
-    with open(THEME_FILE, 'w') as file:
-        json.dump(theme, file)
+    try:
+        with open(THEME_FILE, 'w') as file:
+            json.dump(theme, file)
+    except Exception as e:
+        print("Error writing theme:", e)
 
 @require_POST
 def save_theme(request):
